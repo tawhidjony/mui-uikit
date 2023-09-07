@@ -20,10 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: prepare
-        run: npm prepare
-
+        
       - name: Publish to npm
         run: npm publish
         env:
