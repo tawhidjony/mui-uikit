@@ -1,23 +1,31 @@
-name: Publish to NPM
+name: Publish React Component
+
 on:
   push:
     branches:
-      - main
+      - main # Replace with your desired branch
+
 jobs:
-  release:
-    name: publish
+  publish:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Setup Node
+
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18.x'
-          registry-url: 'https://registry.npmjs.org'
-      - name: build
-        run: npm install && npm run build
-      - name: Publish package to NPM 📦
+          node-version: 14 # Use the Node.js version you need
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React Component
+        run: npm run build # Adjust this based on your build process
+
+      - name: Publish to npm
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
