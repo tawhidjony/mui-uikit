@@ -1,20 +1,30 @@
-name: "publish npm"
+name: Publish React Package
 
-on: push
+on:
+  push:
+    branches:
+      - main # Replace with your desired branch
 
 jobs:
-    publish:
-        runs-on: ubuntu-latest
-        steps:
-            - name: checkout
-              uses: actions/checkout@v2
-            - name: node
-              uses: actions/setup-node@v2
-              with:
-                  node-version: 12
-                  registry-url: https://registry.npmjs.org
-            - name: publish mui uikit
-              run: npm publish --access public
-            #   working-directory: my-package
-              env:
-                  NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16 # Use the Node.js version you need
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: prepare
+        run: npm prepare
+
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
